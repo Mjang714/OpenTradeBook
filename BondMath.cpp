@@ -4,6 +4,8 @@
 #include<cmath>
 #include<stdlib.h>
 
+#include "BondMath.h"
+
 double compoundedToContRate(double rate, int compounding) {
     return compounding*log(1 + (rate/compounding));
 }
@@ -89,3 +91,25 @@ std::vector<double> createCashFlowGen(double years, double principle, int paymen
     return couponPaymentsSchedule;   
 }
 
+//this is an intermediate function is used to create present value cash flows
+std::vector<double> computeDiscountedCashflow(double yield, std::vector<double> maturitySchedule, std::vector<double> cashflowSchedule ) {
+    std::vector<double> presentValueCashflow(maturitySchedule.size());
+
+    for (int i  = 0; i < presentValueCashflow.size(); i++)  {
+        //computing the discounted Cash flow
+        presentValueCashflow[i] = cashflowSchedule[i] * exp(-yield * maturitySchedule[i]);
+    }
+
+    return presentValueCashflow;
+} 
+
+double computeDuration(double yield, double bondPrice, std::vector<double> maturitySchedule, std::vector<double> cashflowSchedule) {
+    std::vector<double> presentCashflow = computeDiscountedCashflow(yield, maturitySchedule, cashflowSchedule);
+    
+    double duration = 0.0;
+    for(int i = 0; i < presentCashflow.size(); i++) {
+        duration += (maturitySchedule[i] * presentCashflow[i]) / bondPrice; 
+    }
+    
+    return duration;
+}
