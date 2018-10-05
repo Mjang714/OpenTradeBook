@@ -4,6 +4,7 @@
     std::vector<double> computeDiscountedCashflow(double yield, std::vector<double> maturitySchedule, std::vector<double> cashflowSchedule);
     std::vector<double> createCashFlowGen(double years, double principle, int paymentFreq, double couponRate); 
     std::vector<double> createTimeMaturitySchedule(int paymentFreq, double years);
+
     double compoundedToContRate(double n, int m);
     double contRateToCompounded(double n, int m);
     double fprime(double yield, std::vector<double>maturitySchedule, std::vector<double> cashflowSchedule);
