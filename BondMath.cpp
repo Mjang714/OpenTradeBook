@@ -113,3 +113,11 @@ double computeDuration(double yield, double bondPrice, std::vector<double> matur
     
     return duration;
 }
+
+inline double computeFiniteDifference(double bondPrice, double bondDuration, double difference) {
+    return -1*bondPrice*bondDuration*difference;
+}
+
+double computeDV01(double bondPrice, double bondDuration) {
+    return computeFiniteDifference(bondPrice, bondDuration, .0001);
+}
